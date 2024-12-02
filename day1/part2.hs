@@ -9,7 +9,6 @@ tuplify (x:y:_) = (x, y)
 
 toCounter l = fromListWith (+) $ map (,1) l
 
-calc :: [(Int, Int)] -> Int
 calc p = let
   l = toCounter $ map fst p
   r = toCounter $ map snd p
