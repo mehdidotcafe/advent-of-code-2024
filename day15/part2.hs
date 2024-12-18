@@ -4,7 +4,7 @@ import qualified Data.List.Split as LS (splitOn)
 import qualified Data.Map.Strict as M (fromList, assocs, (!), union, unions, filter, foldrWithKey, singleton, empty, unionWith)
 import qualified Data.Maybe as Ma (fromMaybe)
 
-genBoard (height, width) rows = M.fromList $ concatMap (\ (y, l) -> map (\ (x, c) -> ((x, y), c)) l) $ zip [0..] $ map (zip [0..]) rows
+genMaze (height, width) rows = M.fromList $ concatMap (\ (y, l) -> map (\ (x, c) -> ((x, y), c)) l) $ zip [0..] $ map (zip [0..]) rows
 
 getInitialPos board = fst . Ma.fromMaybe ((0, 0), '@') . L.find (\ (k, v) -> v == '@') $ M.assocs board
 
@@ -22,7 +22,7 @@ parse input = let
   wideRows = map (\ row -> L.foldr (\ (a, b) acc -> LU.replace a b acc) row [("@", "@."), ("#", "##"), ("O", "[]"), (".", "..")]) rows
   height = length wideRows
   width = length $ head wideRows
-  board = genBoard (height, width) wideRows
+  board = genMaze (height, width) wideRows
   in ((height, width), getInitialPos board, board, concat moves)
 
 pushXObstacles pos vector board
